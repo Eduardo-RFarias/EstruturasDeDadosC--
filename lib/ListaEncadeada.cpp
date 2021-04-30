@@ -3,7 +3,6 @@
 ListaEncadeada::ListaEncadeada()
 {
     this->first = NULL;
-    this->last = NULL;
     this->size = 0;
 }
 
@@ -27,17 +26,7 @@ void ListaEncadeada::addFirst(int valor)
     Node *novoNo;
     novoNo = new Node;
     novoNo->valor = valor;
-    novoNo->pre = NULL;
-    if (size == 0)
-    {
-        novoNo->next = NULL;
-        last = novoNo;
-    }
-    else
-    {
-        novoNo->next = first;
-        first->pre = novoNo;
-    }
+    novoNo->next = (size == 0) ? NULL : first;
     first = novoNo;
     size++;
 }
@@ -50,9 +39,10 @@ void ListaEncadeada::addBeforeKey(int chave, int valor)
         return;
     }
 
-    Node *novoNo, *aux;
+    Node *novoNo, *aux, *aux2;
     bool flag = false;
     aux = first;
+    aux2 = NULL;
 
     if (size == 1)
     {
@@ -74,6 +64,7 @@ void ListaEncadeada::addBeforeKey(int chave, int valor)
             flag = true;
             break;
         }
+        aux2 = aux;
         aux = aux->next;
     } while (aux->next != NULL);
 
@@ -86,29 +77,40 @@ void ListaEncadeada::addBeforeKey(int chave, int valor)
     novoNo = new Node;
     novoNo->valor = valor;
     novoNo->next = aux;
-    novoNo->pre = aux->pre;
-    aux->pre->next = novoNo;
-    aux->pre = novoNo;
+    aux2->next = novoNo;
     size++;
 }
 
 void ListaEncadeada::addLast(int valor)
 {
+    if (size == 0)
+    {
+        addFirst(valor);
+        return;
+    }
+
     Node *novoNo;
     novoNo = new Node;
     novoNo->valor = valor;
     novoNo->next = NULL;
-    if (size == 0)
+
+    if (size == 1)
     {
-        novoNo->pre = NULL;
-        first = novoNo;
+        first->next = novoNo;
     }
     else
     {
-        novoNo->pre = last;
-        last->next = novoNo;
+        Node *aux;
+        aux = first;
+
+        while (aux->next != NULL)
+        {
+            aux = aux->next;
+        }
+
+        aux->next = novoNo;
     }
-    last = novoNo;
+
     size++;
 }
 
@@ -116,13 +118,13 @@ void ListaEncadeada::removeFirst()
 {
     if (size == 0)
     {
+        cout << "Lista vazia" << endl;
         return;
     }
     if (size == 1)
     {
         delete[] first;
         first = NULL;
-        last = NULL;
         size--;
         return;
     }
@@ -130,7 +132,6 @@ void ListaEncadeada::removeFirst()
     Node *aux;
     aux = first;
     first = first->next;
-    first->pre = NULL;
     delete[] aux;
     size--;
 }
@@ -143,8 +144,9 @@ void ListaEncadeada::removeValue(int chave)
         return;
     }
 
-    Node *aux;
+    Node *aux, *aux2;
     aux = first;
+    aux2 = NULL;
     bool flag = false;
 
     if (size == 1)
@@ -160,7 +162,7 @@ void ListaEncadeada::removeValue(int chave)
         return;
     }
 
-    do
+    while (true)
     {
         if (aux->valor == chave)
         {
@@ -171,8 +173,9 @@ void ListaEncadeada::removeValue(int chave)
         {
             break;
         }
+        aux2 = aux;
         aux = aux->next;
-    } while (true);
+    }
 
     if (!flag)
     {
@@ -180,7 +183,7 @@ void ListaEncadeada::removeValue(int chave)
         return;
     }
 
-    if (aux->pre == NULL)
+    if (aux2 == NULL)
     {
         removeFirst();
     }
@@ -190,8 +193,7 @@ void ListaEncadeada::removeValue(int chave)
     }
     else
     {
-        aux->pre->next = aux->next;
-        aux->next->pre = aux->pre;
+        aux2->next = aux->next;
         delete[] aux;
         size--;
     }
@@ -201,22 +203,28 @@ void ListaEncadeada::removeLast()
 {
     if (size == 0)
     {
+        cout << "Lista vazia" << endl;
         return;
     }
+
     if (size == 1)
     {
-        delete[] last;
+        delete[] first;
         first = NULL;
-        last = NULL;
         size--;
         return;
     }
 
     Node *aux;
-    aux = last->pre;
+    aux = first;
+
+    while (aux->next->next != NULL)
+    {
+        aux = aux->next;
+    }
+
+    delete[] aux->next;
     aux->next = NULL;
-    delete[] last;
-    last = aux;
     size--;
 }
 

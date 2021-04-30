@@ -10,13 +10,11 @@ private:
     class Node
     {
     public:
-        Node *pre;
         int valor;
         Node *next;
     };
 
     Node *first;
-    Node *last;
     int size;
 
 public:
