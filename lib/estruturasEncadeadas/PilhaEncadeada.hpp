@@ -1,10 +1,10 @@
-#ifndef PILHA
-#define PILHA
+#ifndef PILHAENCADEADA
+#define PILHAENCADEADA
 
 #include <iostream>
 using namespace std;
 
-class Pilha
+class PilhaEncadeada
 {
 private:
     class Node
@@ -18,8 +18,8 @@ private:
     int size;
 
 public:
-    Pilha();
-    ~Pilha();
+    PilhaEncadeada();
+    ~PilhaEncadeada();
 
     bool isEmpty();
     int getSize();

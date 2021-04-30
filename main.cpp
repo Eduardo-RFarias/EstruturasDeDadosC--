@@ -1,7 +1,7 @@
 #include <iostream>
-#include "ListaEncadeada.hpp"
-#include "ListaVetorizada.hpp"
-#include "Pilha.hpp"
+#include "estruturasEncadeadas/ListaEncadeada.hpp"
+#include "estruturasVetorizadas/ListaVetorizada.hpp"
+#include "estruturasEncadeadas/PilhaEncadeada.hpp"
 using namespace std;
 
 int main(int argc, char const *argv[])
@@ -18,16 +18,21 @@ int main(int argc, char const *argv[])
 
     int aux[9] = {1, 2, 3, 7, 2, 4, 5, 20, 10};
     ListaVetorizada listaVetorizada(aux, 10);
+    ListaVetorizada listaVetorizadaDinamica;
 
     listaVetorizada.append(6);
     listaVetorizada.sort();
 
-    Pilha pilha;
+    listaVetorizadaDinamica.append(5);
+    listaVetorizadaDinamica.append(2);
+    listaVetorizadaDinamica.sort();
 
-    pilha.empilhar(10);
-    pilha.empilhar(20);
-    pilha.empilhar(15);
-    pilha.esvaziar();
+    PilhaEncadeada pilhaEncadeada;
+
+    pilhaEncadeada.empilhar(10);
+    pilhaEncadeada.empilhar(20);
+    pilhaEncadeada.empilhar(15);
+    pilhaEncadeada.esvaziar();
 
     return 0;
 }

@@ -4,6 +4,7 @@ ListaVetorizada::ListaVetorizada(int maxSize)
 {
     this->array = new int[maxSize];
     this->size = 0;
+    this->MAXSIZE = maxSize;
     this->isSorted = false;
 }
 
@@ -132,6 +133,59 @@ void ListaVetorizada::remove(int index)
         return;
     }
 
+    int i = 0;
+    int j = 0;
+    int *newArray = new int[size - 1];
+
+    while (j < size)
+    {
+        if (this->array[j] != index)
+        {
+            newArray[i] = this->array[j];
+            i++;
+        }
+
+        j++;
+    }
+
+    size--;
+    MAXSIZE = size;
+    delete[] this->array;
+    this->array = newArray;
+}
+
+void ListaVetorizada::append(int value)
+{
+    int *newArray = new int[size + 1];
+    this->MAXSIZE = size + 1;
+
+    for (int i = 0; i < size; i++)
+    {
+        newArray[i] = array[i];
+    }
+
+    newArray[size] = value;
+
+    delete[] this->array;
+    this->array = newArray;
+    size++;
+    isSorted = false;
+}
+
+void ListaVetorizada::remove_noReplace(int index)
+{
+    if (size == 0)
+    {
+        cout << "A lista está vazia" << endl;
+        return;
+    }
+
+    if (index >= size)
+    {
+        cout << "Indice grande demais" << endl;
+        return;
+    }
+
     for (int i = index; i < size; i++)
     {
         array[i] = array[i + 1];
@@ -139,7 +193,7 @@ void ListaVetorizada::remove(int index)
     size--;
 }
 
-void ListaVetorizada::append(int value)
+void ListaVetorizada::append_noReplace(int value)
 {
     if (size == MAXSIZE)
     {

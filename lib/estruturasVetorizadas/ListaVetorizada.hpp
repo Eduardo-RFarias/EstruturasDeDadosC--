@@ -13,7 +13,7 @@ private:
     bool isSorted;
 
 public:
-    ListaVetorizada(int size);
+    ListaVetorizada(int size = 0);
     ListaVetorizada(int *array, int size);
     ~ListaVetorizada();
 
@@ -25,6 +25,8 @@ public:
 
     void remove(int index);
     void append(int value);
+    void remove_noReplace(int index);
+    void append_noReplace(int value);
     void insertIn(int value, int index);
 
     void sort();

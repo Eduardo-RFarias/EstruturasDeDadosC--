@@ -1,27 +1,27 @@
-#include "Pilha.hpp"
+#include "PilhaEncadeada.hpp"
 
-Pilha::Pilha()
+PilhaEncadeada::PilhaEncadeada()
 {
     size = 0;
     topo = NULL;
 }
 
-Pilha::~Pilha()
+PilhaEncadeada::~PilhaEncadeada()
 {
     esvaziar();
 }
 
-bool Pilha::isEmpty()
+bool PilhaEncadeada::isEmpty()
 {
     return (size == 0) ? true : false;
 }
 
-int Pilha::getSize()
+int PilhaEncadeada::getSize()
 {
     return size;
 }
 
-void Pilha::esvaziar()
+void PilhaEncadeada::esvaziar()
 {
     Node *aux;
     while (topo != NULL)
@@ -33,7 +33,7 @@ void Pilha::esvaziar()
     size = 0;
 }
 
-void Pilha::empilhar(int valor)
+void PilhaEncadeada::empilhar(int valor)
 {
     Node *novoNo;
     novoNo = new Node;
@@ -43,7 +43,7 @@ void Pilha::empilhar(int valor)
     size++;
 }
 
-int Pilha::desempilhar()
+int PilhaEncadeada::desempilhar()
 {
     if (isEmpty())
     {
@@ -56,7 +56,7 @@ int Pilha::desempilhar()
     return valor;
 }
 
-int Pilha::consultar()
+int PilhaEncadeada::consultar()
 {
     if (isEmpty())
     {
