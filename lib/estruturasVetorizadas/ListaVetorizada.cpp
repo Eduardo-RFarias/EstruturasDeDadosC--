@@ -1,18 +1,20 @@
 #include "ListaVetorizada.hpp"
 
-ListaVetorizada::ListaVetorizada(int maxSize)
+ListaVetorizada::ListaVetorizada(int maxSize, bool isResizable)
 {
     this->array = new int[maxSize];
     this->size = 0;
     this->MAXSIZE = maxSize;
+    this->isResizable = isResizable;
     this->isSorted = false;
 }
 
-ListaVetorizada::ListaVetorizada(int *array, int maxSize)
+ListaVetorizada::ListaVetorizada(int *array, int size, bool isResizable)
 {
-    this->array = new int[maxSize];
-    this->MAXSIZE = maxSize;
-    this->size = 9;
+    this->array = new int[size];
+    this->MAXSIZE = size;
+    this->size = size;
+    this->isResizable = isResizable;
     this->isSorted = false;
 
     for (int i = 0; i < size; i++)
@@ -133,98 +135,109 @@ void ListaVetorizada::remove(int index)
         return;
     }
 
-    int i = 0;
-    int j = 0;
-    int *newArray = new int[size - 1];
-
-    while (j < size)
+    if (this->isResizable)
     {
-        if (this->array[j] != index)
+        int i = 0;
+        int j = 0;
+        int *newArray = new int[size - 1];
+
+        for (int j = 0; j < size; j++)
         {
-            newArray[i] = this->array[j];
-            i++;
+            if (this->array[j] != index)
+            {
+                newArray[i] = this->array[j];
+                i++;
+            }
         }
 
-        j++;
+        MAXSIZE = size - 1;
+        delete[] this->array;
+        this->array = newArray;
     }
-
+    else
+    {
+        for (int i = index; i < size; i++)
+        {
+            array[i] = array[i + 1];
+        }
+    }
     size--;
-    MAXSIZE = size;
-    delete[] this->array;
-    this->array = newArray;
 }
 
 void ListaVetorizada::append(int value)
 {
-    int *newArray = new int[size + 1];
-    this->MAXSIZE = size + 1;
-
-    for (int i = 0; i < size; i++)
+    if (this->isResizable)
     {
-        newArray[i] = array[i];
+        int *newArray = new int[size + 1];
+        this->MAXSIZE = size + 1;
+
+        for (int i = 0; i < size; i++)
+        {
+            newArray[i] = array[i];
+        }
+
+        newArray[size] = value;
+
+        delete[] this->array;
+        this->array = newArray;
+    }
+    else
+    {
+        if (size == MAXSIZE)
+        {
+            cout << "A lista está cheia" << endl;
+            return;
+        }
+
+        this->array[size] = value;
     }
 
-    newArray[size] = value;
-
-    delete[] this->array;
-    this->array = newArray;
-    size++;
-    isSorted = false;
-}
-
-void ListaVetorizada::remove_noReplace(int index)
-{
-    if (size == 0)
-    {
-        cout << "A lista está vazia" << endl;
-        return;
-    }
-
-    if (index >= size)
-    {
-        cout << "Indice grande demais" << endl;
-        return;
-    }
-
-    for (int i = index; i < size; i++)
-    {
-        array[i] = array[i + 1];
-    }
-    size--;
-}
-
-void ListaVetorizada::append_noReplace(int value)
-{
-    if (size == MAXSIZE)
-    {
-        cout << "A lista está cheia" << endl;
-        return;
-    }
-
-    this->array[size] = value;
     size++;
     isSorted = false;
 }
 
 void ListaVetorizada::insertIn(int value, int index)
 {
-    if (size == MAXSIZE)
-    {
-        cout << "A lista está cheia" << endl;
-        return;
-    }
-
     if (index >= size)
     {
         cout << "Indice grande demais" << endl;
         return;
     }
 
-    for (int i = size - 1; i >= index; i--)
+    if (this->isResizable)
     {
-        array[i + 1] = array[i];
+        int *newArray = new int[size + 1];
+
+        int i = 0;
+        for (int j = 0; j < size; j++)
+        {
+            if (j == index)
+            {
+                i++;
+            }
+            newArray[i] = this->array[j];
+            i++;
+        }
+        newArray[index] = value;
+
+        this->MAXSIZE = size + 1;
+        delete[] this->array;
+        this->array = newArray;
     }
-    array[index] = value;
+    else
+    {
+        if (size == MAXSIZE)
+        {
+            cout << "A lista está cheia" << endl;
+            return;
+        }
+
+        for (int i = size - 1; i >= index; i--)
+        {
+            array[i + 1] = array[i];
+        }
+        array[index] = value;
+    }
     size++;
     isSorted = false;
 }

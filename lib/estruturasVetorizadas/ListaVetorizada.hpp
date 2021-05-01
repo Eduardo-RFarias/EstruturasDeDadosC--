@@ -11,10 +11,11 @@ private:
     int size;
     int MAXSIZE;
     bool isSorted;
+    bool isResizable;
 
 public:
-    ListaVetorizada(int size = 0);
-    ListaVetorizada(int *array, int size);
+    ListaVetorizada(int maxSize = 0, bool isResizable = true);
+    ListaVetorizada(int *array, int maxSize, bool isResizable = true);
     ~ListaVetorizada();
 
     int getSize();
@@ -25,8 +26,6 @@ public:
 
     void remove(int index);
     void append(int value);
-    void remove_noReplace(int index);
-    void append_noReplace(int value);
     void insertIn(int value, int index);
 
     void sort();
