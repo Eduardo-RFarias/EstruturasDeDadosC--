@@ -16,5 +16,5 @@
 Para compilar use o Cmake.
 
 Caso não possa usar o Cmake deixe os arquivos na mesma pasta,
-modifique os includes na main.cpp e use o comando g++ \*.cpp -o output
+modifique os includes na main.cpp e use o comando " g++ *.cpp -o output "
 execute o programa com output.exe ou ./output.out
