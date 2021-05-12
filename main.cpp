@@ -1,8 +1,8 @@
 #include <iostream>
-#include "estruturasEncadeadas/ListaEncadeada.hpp"
-#include "estruturasEncadeadas/PilhaEncadeada.hpp"
-#include "estruturasEncadeadas/FilaEncadeada.hpp"
-#include "estruturasVetorizadas/ListaVetorizada.hpp"
+#include "lib/estruturasEncadeadas/ListaEncadeada.hpp"
+#include "lib/estruturasEncadeadas/PilhaEncadeada.hpp"
+#include "lib/estruturasEncadeadas/FilaEncadeada.hpp"
+#include "lib/estruturasVetorizadas/ListaVetorizada.hpp"
 using namespace std;
 
 int main(int argc, char const *argv[])
