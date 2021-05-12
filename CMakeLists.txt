@@ -5,6 +5,7 @@ add_library(lib
 lib/estruturasEncadeadas/ListaEncadeada.cpp
 lib/estruturasEncadeadas/PilhaEncadeada.cpp
 lib/estruturasEncadeadas/FilaEncadeada.cpp
+lib/estruturasEncadeadas/Abp.cpp
 lib/estruturasVetorizadas/ListaVetorizada.cpp
 )
 

@@ -4,29 +4,43 @@
 #include <iostream>
 using namespace std;
 
-typedef struct Node
-{
-    int value;
-    Node *left;
-    Node *right;
-};
-
 class Abp
 {
 private:
+    class Node
+    {
+    public:
+        int value;
+        Node *left;
+        Node *right;
+    };
+
     Node *root;
-    int size;
+
+    Node *balance(Node *);
+    int height(Node *);
+    int diff(Node *);
+    Node *findMin(Node *);
+    Node *findMax(Node *);
+
+    Node *rotateRR(Node *);
+    Node *rotateRL(Node *);
+    Node *rotateLR(Node *);
+    Node *rotateLL(Node *);
+
+    Node *insert_(int, Node *);
+    Node *remove_(Node *, int);
+    void display_(Node *, int = 1);
+    void showBalance_(Node *);
 
 public:
     Abp();
     ~Abp();
 
-    int getSize();
-
-    Node *rotateRR(Node *parent);
-    Node *rotateRL(Node *parent);
-    Node *rotateLR(Node *parent);
-    Node *rotateLL(Node *parent);
+    void insert(int value);
+    void remove(int value);
+    void display();
+    void showBalance();
 };
 
 #endif
