@@ -3,18 +3,42 @@
 Abp::Abp()
 {
     this->root = NULL;
+    this->size = 0;
 }
 
 Abp::~Abp()
 {
-    //TODO
+    reset();
 }
-//------------------------------------------------------------
+
+bool Abp::isEmpty()
+{
+    return this->root == NULL;
+}
+
+void Abp::reset(Node *node)
+{
+    if (node != NULL)
+    {
+        reset(node->right);
+        reset(node->left);
+        delete[] node;
+    }
+}
+
+void Abp::reset()
+{
+    reset(this->root);
+    this->root = NULL;
+}
+
 void Abp::insert(int value)
 {
-    this->root = insert_(value, this->root);
+    this->root = insert(value, this->root);
+    this->size++;
 }
-Abp::Node *Abp::insert_(int value, Node *root)
+
+Abp::Node *Abp::insert(int value, Node *root)
 {
     if (root == NULL)
     {
@@ -26,35 +50,36 @@ Abp::Node *Abp::insert_(int value, Node *root)
     }
     else if (value < root->value)
     {
-        root->left = insert_(value, root->left);
+        root->left = insert(value, root->left);
         root = balance(root);
     }
     else if (value >= root->value)
     {
-        root->right = insert_(value, root->right);
+        root->right = insert(value, root->right);
         root = balance(root);
     }
     return root;
 }
-//------------------------------------------------------------
+
 void Abp::remove(int value)
 {
-    this->root = remove_(this->root, value);
+    this->root = remove(this->root, value);
 }
-Abp::Node *Abp::remove_(Node *t, int x)
+
+Abp::Node *Abp::remove(Node *t, int x)
 {
     Node *temp;
     if (t == NULL)
         return NULL;
     else if (x < t->value)
-        t->left = remove_(t->left, x);
+        t->left = remove(t->left, x);
     else if (x > t->value)
-        t->right = remove_(t->right, x);
+        t->right = remove(t->right, x);
     else if (t->left && t->right)
     {
         temp = findMin(t->right);
         t->value = temp->value;
-        t->right = remove_(t->right, t->value);
+        t->right = remove(t->right, t->value);
     }
     else
     {
@@ -64,51 +89,54 @@ Abp::Node *Abp::remove_(Node *t, int x)
         else if (t->right == NULL)
             t = t->left;
         delete temp;
+        this->size--;
     }
     if (t == NULL)
         return t;
     t = balance(t);
     return t;
 }
-//------------------------------------------------------------
+
 void Abp::display()
 {
-    display_(this->root);
+    display(this->root);
     cout << endl;
 }
-void Abp::display_(Node *ptr, int level)
+
+void Abp::display(Node *ptr, int level)
 {
     int i;
     if (ptr != NULL)
     {
-        display_(ptr->right, level + 1);
+        display(ptr->right, level + 1);
         printf("\n");
         if (ptr == root)
             cout << "Raiz -> ";
         for (i = 0; i < level && ptr != root; i++)
             cout << "        ";
         cout << ptr->value;
-        display_(ptr->left, level + 1);
+        display(ptr->left, level + 1);
     }
 }
-//------------------------------------------------------------
+
 void Abp::showBalance()
 {
-    showBalance_(this->root);
+    showBalance(this->root);
 }
-void Abp::showBalance_(Node *root)
+
+void Abp::showBalance(Node *root)
 {
     if (root == NULL)
         return;
-    showBalance_(root->left);
+    showBalance(root->left);
     cout << root->value << ":" << diff(root) << " ";
-    showBalance_(root->right);
+    showBalance(root->right);
 }
-//------------------------------------------------------------
-//Helper functions
+
 Abp::Node *Abp::balance(Node *temp)
 {
     int bal_factor = diff(temp);
+
     if (bal_factor > 1)
     {
         if (diff(temp->left) > 0)
@@ -149,16 +177,6 @@ Abp::Node *Abp::findMin(Node *t)
         return findMin(t->left);
 }
 
-Abp::Node *Abp::findMax(Node *t)
-{
-    if (t == NULL)
-        return NULL;
-    else if (t->right == NULL)
-        return t;
-    else
-        return findMax(t->right);
-}
-
 int Abp::diff(Node *temp)
 {
     int l_height = height(temp->left);
@@ -167,7 +185,6 @@ int Abp::diff(Node *temp)
     return b_factor;
 }
 
-//Rotations
 Abp::Node *Abp::rotateRR(Node *parent)
 {
     Node *temp;

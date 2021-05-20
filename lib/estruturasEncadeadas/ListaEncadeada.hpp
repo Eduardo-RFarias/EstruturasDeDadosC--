@@ -22,6 +22,7 @@ public:
     ~ListaEncadeada();
 
     bool isEmpty();
+    void clear();
 
     int getSize();
     int get(int index);

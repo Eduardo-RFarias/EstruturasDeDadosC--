@@ -25,7 +25,7 @@ ListaVetorizada::ListaVetorizada(int *array, int size, bool isResizable)
 
 ListaVetorizada::~ListaVetorizada()
 {
-    delete[] array;
+    delete[] this->array;
 }
 
 int ListaVetorizada::getSize()
@@ -135,6 +135,7 @@ void ListaVetorizada::remove(int index)
         return;
     }
 
+    bool flag = false;
     if (this->isResizable)
     {
         int i = 0;
@@ -143,14 +144,18 @@ void ListaVetorizada::remove(int index)
 
         for (int j = 0; j < size; j++)
         {
-            if (this->array[j] != index)
+            if (this->array[j] == index)
+            {
+                flag = true;
+                MAXSIZE = size - 1;
+            }
+            else
             {
                 newArray[i] = this->array[j];
                 i++;
             }
         }
 
-        MAXSIZE = size - 1;
         delete[] this->array;
         this->array = newArray;
     }
@@ -158,10 +163,17 @@ void ListaVetorizada::remove(int index)
     {
         for (int i = index; i < size; i++)
         {
+            if (array[i] == index)
+            {
+                flag = true;
+            }
             array[i] = array[i + 1];
         }
     }
-    size--;
+    if (flag)
+    {
+        size--;
+    }
 }
 
 void ListaVetorizada::append(int value)

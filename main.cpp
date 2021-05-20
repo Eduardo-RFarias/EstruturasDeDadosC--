@@ -1,9 +1,10 @@
-#include <iostream>
 #include "lib/estruturasEncadeadas/ListaEncadeada.hpp"
 #include "lib/estruturasEncadeadas/PilhaEncadeada.hpp"
 #include "lib/estruturasEncadeadas/FilaEncadeada.hpp"
 #include "lib/estruturasVetorizadas/ListaVetorizada.hpp"
 #include "lib/estruturasEncadeadas/Abp.hpp"
+
+#include <iostream>
 using namespace std;
 
 int main(int argc, char const *argv[])
@@ -20,15 +21,17 @@ int main(int argc, char const *argv[])
 
     int aux[9] = {1, 2, 3, 7, 2, 4, 5, 20, 10};
     ListaVetorizada listaVetorizada(aux, 9, false);
-    ListaVetorizada listaVetorizadaDinamica;
 
     listaVetorizada.sort();
     listaVetorizada.binarySearch(4);
+
+    ListaVetorizada listaVetorizadaDinamica;
 
     listaVetorizadaDinamica.append(5);
     listaVetorizadaDinamica.append(2);
     listaVetorizadaDinamica.insertIn(10, 1);
     listaVetorizadaDinamica.remove(0);
+    listaVetorizadaDinamica.remove(2);
     listaVetorizadaDinamica.sort();
 
     PilhaEncadeada pilhaEncadeada;
@@ -52,11 +55,9 @@ int main(int argc, char const *argv[])
         arvoreAVL.insert(i);
     }
 
-    cout << "Arvore Balanceada:" << endl;
-    arvoreAVL.display();
-    cout << "Valores e respectivos fatores de balanceamento:\n"
-         << endl;
-    arvoreAVL.showBalance();
+    arvoreAVL.remove(15);
 
+    arvoreAVL.display();
+    arvoreAVL.showBalance();
     return 0;
 }

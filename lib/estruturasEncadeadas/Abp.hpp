@@ -16,26 +16,31 @@ private:
     };
 
     Node *root;
+    int size;
+
+    void reset(Node *);
 
     Node *balance(Node *);
     int height(Node *);
     int diff(Node *);
     Node *findMin(Node *);
-    Node *findMax(Node *);
 
     Node *rotateRR(Node *);
     Node *rotateRL(Node *);
     Node *rotateLR(Node *);
     Node *rotateLL(Node *);
 
-    Node *insert_(int, Node *);
-    Node *remove_(Node *, int);
-    void display_(Node *, int = 1);
-    void showBalance_(Node *);
+    Node *insert(int, Node *);
+    Node *remove(Node *, int);
+    void display(Node *, int = 1);
+    void showBalance(Node *);
 
 public:
     Abp();
     ~Abp();
+
+    void reset();
+    bool isEmpty();
 
     void insert(int value);
     void remove(int value);

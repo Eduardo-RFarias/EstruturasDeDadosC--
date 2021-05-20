@@ -8,12 +8,18 @@ ListaEncadeada::ListaEncadeada()
 
 ListaEncadeada::~ListaEncadeada()
 {
+    clear();
+}
+
+void ListaEncadeada::clear()
+{
     for (int i = 0; i < size; i++)
     {
         Node *aux = first->next;
         delete[] first;
         first = aux;
     }
+    this->size = 0;
 }
 
 bool ListaEncadeada::isEmpty()
