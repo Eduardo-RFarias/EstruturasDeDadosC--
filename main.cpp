@@ -3,8 +3,10 @@
 #include "lib/estruturasEncadeadas/FilaEncadeada.hpp"
 #include "lib/estruturasVetorizadas/ListaVetorizada.hpp"
 #include "lib/estruturasEncadeadas/Abp.hpp"
+#include "lib/auxilares/gen_random.hpp"
 
 #include <iostream>
+
 using namespace std;
 
 int main(int argc, char const *argv[])
@@ -48,14 +50,15 @@ int main(int argc, char const *argv[])
 
     Abp arvoreAVL(true);
 
-    for (int i = 0; i <= 15; i++)
+    for (int i = 1; i <= 16; i++)
     {
-        arvoreAVL.insert(i);
+        arvoreAVL.insert(i, gen_random(i));
     }
 
-    arvoreAVL.remove(15);
+    arvoreAVL.remove(16);
 
     arvoreAVL.display();
     arvoreAVL.showBalance();
+    cout << arvoreAVL.get(7) << endl;
     return 0;
 }

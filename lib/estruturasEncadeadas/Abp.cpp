@@ -38,25 +38,27 @@ int Abp::getSize()
     return size;
 }
 
-void Abp::insert(int value)
+void Abp::insert(int value, string text)
 {
-    this->root = insert(value, this->root);
+    this->root = insert(value, this->root, text);
     this->size++;
 }
 
-Abp::Node *Abp::insert(int value, Node *root)
+Abp::Node *Abp::insert(int value, Node *root, string text)
 {
     if (root == NULL)
     {
         root = new Node;
         root->value = value;
+        root->text = new char[text.length() + 1];
+        strcpy(root->text, text.c_str());
         root->left = NULL;
         root->right = NULL;
         return root;
     }
     else if (value < root->value)
     {
-        root->left = insert(value, root->left);
+        root->left = insert(value, root->left, text);
         if (avl)
         {
             root = balance(root);
@@ -64,7 +66,7 @@ Abp::Node *Abp::insert(int value, Node *root)
     }
     else if (value >= root->value)
     {
-        root->right = insert(value, root->right);
+        root->right = insert(value, root->right, text);
         if (avl)
         {
             root = balance(root);
@@ -112,6 +114,27 @@ Abp::Node *Abp::remove(Node *t, int x)
     return t;
 }
 
+string Abp::get(int value)
+{
+    Node *root = this->root;
+    while (root != NULL)
+    {
+        if (value == root->value)
+        {
+            return string(root->text);
+        }
+        else if (value > root->value)
+        {
+            root = root->right;
+        }
+        else
+        {
+            root = root->left;
+        }
+    }
+    return NULL;
+}
+
 void Abp::display()
 {
     display(this->root);
@@ -137,6 +160,7 @@ void Abp::display(Node *ptr, int level)
 void Abp::showBalance()
 {
     showBalance(this->root);
+    cout << endl;
 }
 
 void Abp::showBalance(Node *root)
