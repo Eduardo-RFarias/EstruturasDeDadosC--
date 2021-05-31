@@ -1,8 +1,9 @@
 #include "Abp.hpp"
 
-Abp::Abp()
+Abp::Abp(bool avl)
 {
     this->root = NULL;
+    this->avl = avl;
     this->size = 0;
 }
 
@@ -32,6 +33,11 @@ void Abp::reset()
     this->root = NULL;
 }
 
+int Abp::getSize()
+{
+    return size;
+}
+
 void Abp::insert(int value)
 {
     this->root = insert(value, this->root);
@@ -51,12 +57,18 @@ Abp::Node *Abp::insert(int value, Node *root)
     else if (value < root->value)
     {
         root->left = insert(value, root->left);
-        root = balance(root);
+        if (avl)
+        {
+            root = balance(root);
+        }
     }
     else if (value >= root->value)
     {
         root->right = insert(value, root->right);
-        root = balance(root);
+        if (avl)
+        {
+            root = balance(root);
+        }
     }
     return root;
 }
@@ -93,7 +105,10 @@ Abp::Node *Abp::remove(Node *t, int x)
     }
     if (t == NULL)
         return t;
-    t = balance(t);
+    if (avl)
+    {
+        t = balance(t);
+    }
     return t;
 }
 

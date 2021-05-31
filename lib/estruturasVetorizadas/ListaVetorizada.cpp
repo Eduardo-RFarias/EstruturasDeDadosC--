@@ -129,9 +129,9 @@ void ListaVetorizada::remove(int index)
         return;
     }
 
-    if (index >= size)
+    if (index >= size || index < 0)
     {
-        cout << "Indice grande demais" << endl;
+        cout << "Indice fora do intervalo" << endl;
         return;
     }
 
@@ -144,7 +144,7 @@ void ListaVetorizada::remove(int index)
 
         for (int j = 0; j < size; j++)
         {
-            if (this->array[j] == index)
+            if (j == index)
             {
                 flag = true;
                 MAXSIZE = size - 1;

@@ -26,14 +26,12 @@ int main(int argc, char const *argv[])
     listaVetorizada.binarySearch(4);
 
     ListaVetorizada listaVetorizadaDinamica;
-
     listaVetorizadaDinamica.append(5);
     listaVetorizadaDinamica.append(2);
     listaVetorizadaDinamica.insertIn(10, 1);
     listaVetorizadaDinamica.remove(0);
     listaVetorizadaDinamica.remove(2);
     listaVetorizadaDinamica.sort();
-
     PilhaEncadeada pilhaEncadeada;
 
     pilhaEncadeada.empilhar(10);
@@ -48,7 +46,7 @@ int main(int argc, char const *argv[])
     filaEncadeada.see();
     filaEncadeada.remove();
 
-    Abp arvoreAVL;
+    Abp arvoreAVL(true);
 
     for (int i = 0; i <= 15; i++)
     {

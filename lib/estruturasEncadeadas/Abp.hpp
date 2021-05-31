@@ -16,6 +16,7 @@ private:
     };
 
     Node *root;
+    bool avl;
     int size;
 
     void reset(Node *);
@@ -36,11 +37,12 @@ private:
     void showBalance(Node *);
 
 public:
-    Abp();
+    Abp(bool avl = true);
     ~Abp();
 
     void reset();
     bool isEmpty();
+    int getSize();
 
     void insert(int value);
     void remove(int value);
